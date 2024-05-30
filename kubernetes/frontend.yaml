@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: banka-4-dev
+  labels:
+    service: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: frontend
+  template:
+    metadata:
+      labels:
+        service: frontend
+    spec:
+      containers:
+      - image: harbor.k8s.elab.rs/banka-4/frontend:latest
+        imagePullPolicy: Always
+        name: frontend
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+          limits:
+            cpu: 2
+            memory: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: banka-4-dev
+spec:
+  selector:
+    service: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
