@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banka-service
+  namespace: {{ .Release.Namespace }}
+  labels:
+    service: banka-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: banka-service
+  template:
+    metadata:
+      labels:
+        service: banka-service
+    spec:
+      containers:
+      - image: harbor.k8s.elab.rs/banka-4/banka-service:{{ .Values.imageTag}}
+        imagePullPolicy: Always
+        name: banka-service
+        env:
+          - name: spring.datasource.url
+            value: jdbc:postgresql://banka-4-ha:5432/moja_banka_db?currentSchema=banka_schema
+          - name: spring.datasource.username
+            valueFrom:
+              secretKeyRef:
+                name: banka-4-pguser-admin
+                key: user
+          - name: spring.datasource.password
+            valueFrom:
+              secretKeyRef:
+                name: banka-4-pguser-admin
+                key: password
+          - name: spring.jpa.hibernate.ddl-auto
+            value: update
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+          limits:
+            cpu: 2
+            memory: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: banka-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    service: banka-service
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
