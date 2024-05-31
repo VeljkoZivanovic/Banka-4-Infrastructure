@@ -1,0 +1,6 @@
+apiVersion: v2
+name: banka-4-backend
+description: Backend za aplikaciju tima Banka 4
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

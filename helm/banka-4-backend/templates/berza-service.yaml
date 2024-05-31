@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: banka-service
-  namespace: banka-4-dev
+  name: berza-servis
+  namespace: {{ .Release.Namespace }}
   labels:
-    service: banka-service
+    service: berza-servis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: banka-service
+      service: berza-servis
   template:
     metadata:
       labels:
-        service: banka-service
+        service: berza-servis
     spec:
       containers:
-      - image: harbor.k8s.elab.rs/banka-4/banka-service:latest
+      - image: harbor.k8s.elab.rs/banka-4/berza-servis:{{ .Values.imageTag}}
         imagePullPolicy: Always
-        name: banka-service
+        name: berza-servis
         env:
           - name: spring.datasource.url
-            value: jdbc:postgresql://banka-4-ha:5432/moja_banka_db?currentSchema=banka_schema
+            value: jdbc:postgresql://banka-4-ha:5432/moja_banka_db?currentSchema=berza_schema
           - name: spring.datasource.username
             valueFrom:
               secretKeyRef:
@@ -45,12 +45,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: banka-service
-  namespace: banka-4-dev
+  name: berza-servis
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
-    service: banka-service
+    service: berza-servis
   ports:
     - protocol: TCP
-      port: 8082
-      targetPort: 8082
+      port: 8081
+      targetPort: 8081

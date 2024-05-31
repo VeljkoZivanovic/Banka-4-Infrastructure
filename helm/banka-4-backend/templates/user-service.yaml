@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: user-service
-  namespace: banka-4-dev
+  namespace: {{ .Release.Namespace }}
   labels:
     service: user-service
 spec:
@@ -16,7 +16,7 @@ spec:
         service: user-service
     spec:
       containers:
-      - image: harbor.k8s.elab.rs/banka-4/user-service:latest
+      - image: harbor.k8s.elab.rs/banka-4/user-service:{{ .Values.imageTag}}
         imagePullPolicy: Always
         name: user-service
         env:
@@ -46,7 +46,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: user-service
-  namespace: banka-4-dev
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     service: user-service
