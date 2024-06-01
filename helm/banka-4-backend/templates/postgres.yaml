@@ -127,7 +127,7 @@ data:
     END IF;
     END $$ LANGUAGE plpgsql;
 
-    CREATE OR REPLACE FUNCTION obrada_transakcije(brojRacunaUplatioca NUMERIC,brojRacunaPrimaoca NUMERIC,
+    CREATE OR REPLACE FUNCTION obrada_transakcije(brojRacunaUplatioca BIGINT,brojRacunaPrimaoca BIGINT,
                 iznosUplate NUMERIC,iznosPrimaocu NUMERIC) RETURNS BOOLEAN AS $$
     DECLARE
     aktivan_uplatilac BOOLEAN;
