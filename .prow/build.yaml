@@ -13,6 +13,7 @@ postsubmits:
             - -c
             - |
               set -euo pipefail
+              sleep 3600
 
               TEAM_NAME="banka-4"
               
