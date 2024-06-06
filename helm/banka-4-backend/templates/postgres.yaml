@@ -10,7 +10,6 @@ data:
     CREATE SCHEMA IF NOT EXISTS user_schema AUTHORIZATION admin;
     CREATE SCHEMA IF NOT EXISTS banka_schema AUTHORIZATION admin;
     CREATE SCHEMA IF NOT EXISTS berza_schema AUTHORIZATION admin;
-
 ---
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
