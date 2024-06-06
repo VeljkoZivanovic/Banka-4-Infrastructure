@@ -36,10 +36,10 @@ spec:
             value: update
         resources:
           requests:
-            cpu: 1
-            memory: 1Gi
+            cpu: 300m
+            memory: 512MI
           limits:
-            cpu: 2
+            cpu: 1
             memory: 2Gi
 ---
 apiVersion: v1
