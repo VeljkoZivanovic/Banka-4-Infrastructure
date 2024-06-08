@@ -16,7 +16,7 @@ spec:
         service: frontend
     spec:
       containers:
-      - image: harbor.k8s.elab.rs/banka-4/frontend:{{ .Values.imageTag }}
+      - image: harbor.k8s.elab.rs/banka-4/{{ .Values.imageName }}:{{ .Values.imageTag }}
         imagePullPolicy: Always
         name: frontend
         resources:
@@ -33,9 +33,10 @@ metadata:
   name: frontend
   namespace: {{ .Release.Namespace }}
 spec:
+  type: ClusterIP
   selector:
     service: frontend
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
+      protocol: TCP
       targetPort: 80
